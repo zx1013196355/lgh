@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring_ssm_mapper.StudentCustomMapper">
+    <!--整合缓存框架-->
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+
+    <sql id="studentShow">
+        <if test="studentCustom!=null">
+            <if test="studentCustom.name1!=null and studentCustom.name1!=''">
+                and name1 like '%${studentCustom.name1}%'
+            </if>
+        </if>
+    </sql>
+
+    <select id="selectStudent" parameterType="StudentVo" resultType="studentCustom">
+        select * from student
+        <where>
+            <include refid="studentShow"></include>
+        </where>
+    </select>
+
+</mapper>

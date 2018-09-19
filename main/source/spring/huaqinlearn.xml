@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.Iorg/schema/mvc/spring-mvc.xsd
+         ">
+
+    <!--注解-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+
+    <aop:config>
+
+        <!--切面-->
+        <aop:aspect ref="ce1">
+            <aop:pointcut id="cut" expression="execution(* com.test.ce01.add(..))"></aop:pointcut>
+            <aop:around method="add" pointcut-ref="cut"></aop:around>
+            <aop:before method="ss" pointcut-ref="cut"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="ce" class="com.test.ce01"></bean>
+    <bean id="ce1" class="com.test.ce02"></bean>
+</beans>

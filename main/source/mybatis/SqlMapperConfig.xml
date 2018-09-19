@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <!--<settings>-->
+    <!--&lt;!&ndash;开启二级缓存&ndash;&gt;-->
+    <!--&lt;!&ndash;<setting name="cacheEnabled" value="true"/>&ndash;&gt;-->
+
+    <!--</settings>-->
+    <typeAliases>
+        <!--设置别名，此包中的类都使用类名，不区分大小写-->
+        <package name="com.spring_ssm_controll"></package>
+        <package name="com.spring_ssm_po"></package>
+        <package name="com.spring_ssm_service"></package>
+        <package name="com.spring_ssm_mapper"></package>
+        <!--<package name="com.mybatis_spring02"></package>-->
+    </typeAliases>
+
+    <mappers>
+        <!--加载映射文件-->
+        <mapper resource="mybatis/StudentCustomMapper.xml"/>
+        <mapper resource="mybatis/StudentMapper.xml"/>
+    </mappers>
+
+</configuration>

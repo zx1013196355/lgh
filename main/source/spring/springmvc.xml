@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         ">
+    <!--指定controller包-->
+
+    <context:component-scan base-package="com.spring_ssm_controll"></context:component-scan>
+
+    <!--静态资源配置-->
+    <mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+    <mvc:resources location="/bootstrap4/" mapping="/bootstrap4/**"></mvc:resources>
+    <mvc:resources location="/font-awesome-4.7.0/" mapping="/font-awesome-4.7.0/**"></mvc:resources>
+
+    <!-- 配置校验器 -->
+    <bean id="messageSource"
+
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+
+
+        <property name="basenames">
+
+            <list>
+
+                <value>CustomValidationMessages</value>
+
+            </list>
+
+        </property>
+
+
+        <property name="defaultEncoding" value="utf-8" />
+
+        <!-- 对资源文件内容缓存时间，单位秒 -->
+
+        <property name="cacheSeconds" value="120" />
+
+    </bean>
+    <bean id="validator"
+
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" >
+
+
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+
+        <property name="validationMessageSource" ref="messageSource" />
+
+    </bean>
+
+
+    <mvc:annotation-driven validator="validator">
+
+    </mvc:annotation-driven>
+
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+    </bean>
+
+    <!--全局异常处理器
+    只要实现了HandlerExceptionResolver就是全局异常处理器-->
+    <bean class="com.spring_ssm_exception.CustomExceptinResolver"></bean>
+
+
+    <!--文件上传-->
+    <bean id="multipartResolver"
+                class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+        <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="5242880" />
+
+    </bean>
+
+    <!--拦截器-->
+    <mvc:interceptors>
+        <!--多个拦截器，顺序执行-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.spring_ssm_HandlerInterceptor.loginInterceptor"></bean>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.spring_ssm_HandlerInterceptor.spring_ssm_HandlerInterceptor2"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
